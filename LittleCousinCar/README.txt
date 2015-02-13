@@ -3,22 +3,22 @@ Como utilizar a biblioteca LittleCousinCar.h:
   * Funções:
     - prepararPinos()
       Define os terminais do CI de acordo com suas devidas tarefas (Entrada ou Saida) e freia os motores
-      Parâmetros de entrada:
-        Nenhum
-      Tipo de retorno:
-        VOID
-      Exemplo de uso:
-        prepararPinos(); //Prepara os pinos
+        Parâmetros de entrada:
+          Nenhum
+        Tipo de retorno:
+          VOID
+        Exemplo de uso:
+          prepararPinos(); //Prepara os pinos
     
     - leRoda(lado)
       Realiza a leitura do sensor ótico localizado nas rodas para saber sua posição
-      Parâmetros de entrada:
-        ladoDireito - Efetua a leitura do sensor da roda direita
-        ladoEsquerdo - Efetua a leitura do sensor da roda esquerda
-      Tipo de retorno:
-        Inteiro - Valor da leitura do sensor
-      Exemplo de uso:
-        int i = leRoda(ladoDireito); //Variavel i recebe o valor da leitura do sensor ótico da roda direita
+        Parâmetros de entrada:
+          ladoDireito - Efetua a leitura do sensor da roda direita
+          ladoEsquerdo - Efetua a leitura do sensor da roda esquerda
+        Tipo de retorno:
+          Inteiro - Valor da leitura do sensor
+        Exemplo de uso:
+          int i = leRoda(ladoDireito); //Variavel i recebe o valor da leitura do sensor ótico da roda direita
   
     - motorDireita(direcao)
       Realiza operações com o motor do lado direito ( Motor 1 ).
@@ -31,7 +31,6 @@ Como utilizar a biblioteca LittleCousinCar.h:
         Exemplo de uso:
           motorDireita(FRENTE); //Move o motor da direita para frente indefinidamente
 
-
     - motorEsquerda(direcao)
       Realiza operações com o motor do lado esquerdo ( Motor 2 ).
         Parâmetros de entrada:
@@ -42,3 +41,30 @@ Como utilizar a biblioteca LittleCousinCar.h:
           VOID
         Exemplo de uso:
           motorEsquerda(FRENTE); //Move o motor da esquerda para frente indefinidamente
+          
+    - movimentaFrente(passos)
+      Movimenta o carro para frente um determinado número de passos
+        Parâmetros de entrada:
+          Inteiro - Número de passos
+        Tipo de retorno:
+          Booleano - Retorna TRUE quando todos os passos forem completados
+        Exemplo de uso:
+          bool fim = movimentaFrente(10); - Variavel fim recebe TRUE assim que o movimento termina
+    - movimentaTras(passos)
+      Movimenta o carro para trás um determinado número de passos
+        Parâmetros de entrada:
+          Inteiro - Número de passos
+        Tipo de retorno:
+          Booleano - Retorna TRUE quando todos os passos forem completados
+        Exemplo de uso:
+          bool fim = movimentaTras(10); - Variavel fim recebe TRUE assim que o movimento termina
+    - igualaRodas()
+      Posiciona as duas rodas no inicio do passo
+        Parâmetros de entrada:
+          Nenhum
+        Tipo de retorno:
+          Booleano - Retorna TRUE quando as duas rodas estiverem alinhadas
+        Exemplo de uso:
+          if(igualaRodas()){ //--// }
+    
+        
