@@ -1,5 +1,5 @@
 /*****************************************************************************
-	UTFGames LittleCousinCenter Library
+	UTFGames LittleCousinCenter Library v0.1 ALPHA
   AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
 	
 	This file is part of LittleCousin.
@@ -74,10 +74,5 @@ int leituraDasEntradas(){
 		}
 	}
 }
-
-
-
-
-
 
 /*--LittleCousinCente
