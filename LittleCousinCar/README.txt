@@ -50,6 +50,7 @@ Como utilizar a biblioteca LittleCousinCar.h:
           Booleano - Retorna TRUE quando todos os passos forem completados
         Exemplo de uso:
           bool fim = movimentaFrente(10); - Variavel fim recebe TRUE assim que o movimento termina
+    
     - movimentaTras(passos)
       Movimenta o carro para trás um determinado número de passos
         Parâmetros de entrada:
@@ -58,6 +59,25 @@ Como utilizar a biblioteca LittleCousinCar.h:
           Booleano - Retorna TRUE quando todos os passos forem completados
         Exemplo de uso:
           bool fim = movimentaTras(10); - Variavel fim recebe TRUE assim que o movimento termina
+          
+    - rotacionaDireita(passos)
+      Rotaciona o carro para direita um determinado número de passos
+        Parâmetros de entrada:
+          Inteiro - Número de passos
+        Tipo de retorno:
+          Booleano - Retorna TRUE quando todos os passos forem completados
+        Exemplo de uso:
+          bool fim = rotacionaDireita(10); - Variavel fim recebe TRUE assim que a rotação termina
+
+    - rotacionaEsquerda(passos)
+      Rotaciona o carro para esquerda um determinado número de passos
+        Parâmetros de entrada:
+          Inteiro - Número de passos
+        Tipo de retorno:
+          Booleano - Retorna TRUE quando todos os passos forem completados
+        Exemplo de uso:
+          bool fim = rotacionaEsquerda(10); - Variavel fim recebe TRUE assim que a rotação termina
+          
     - igualaRodas()
       Posiciona as duas rodas no inicio do passo
         Parâmetros de entrada:
