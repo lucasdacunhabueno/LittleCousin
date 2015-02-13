@@ -1,5 +1,21 @@
 /*****************************************************************************
-UTFGames LittleCousinCar Library
+	UTFGames LittleCousinCar Library
+	
+	This file is part of LittleCousin.
+	
+  LittleCousin is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  LittleCousin is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with LittleCousin.  If not, see <http://www.gnu.org/licenses/>.
+
 *****************************************************************************/
 
 //---------------------------------------------------------------------------
@@ -23,15 +39,18 @@ uint_8 enableM1 = 5;
 uint_8 enableM2 = 6;
 uint_8 pin1A = 7;
 uint_8 pin3A = 8;
-
+int passoPadrao = 10;
 
 void prepararPinos();
 int leRoda(int lado);
 void motorDireita(int direcao);
 void motorEsquerda(int direcao);
+bool movimentaFrente(int passos);
+bool igualaRodas();
+bool movimentaTras(int passos);
 
 void prepararPinos(){
-	pinMode(pinoSensorDireito,0);
+  pinMode(pinoSensorDireito,0);
 	pinMode(pinoSensorEsquerdo,0);
 	pinMode(enableM1,1);
 	pinMode(enableM2,1);
@@ -68,12 +87,45 @@ void motorEsquerda(int direcao){
 			digitalWrite(pin3A,0);    // ATERRA O PINO 3A
 		}
 }
-
-
-
 int leRoda(int lado){
-	return lado == 0 ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
+	return lado == ladoDireito ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
 }
+bool igualaRodas(){
+	int i = leRoda(ladoDireito);
+	while(leRoda(ladoDireito) == i)
+		motorDireita(FRENTE);
+	motorDireita(PARAR);
+	i = leRoda(ladoEsquerdo);
+	while(leRoda(ladoEsquerdo) == i)
+		motorEsquerda(FRENTE);
+	motorEsquerda(PARAR);
+	return true;
+}
+bool movimentaFrente(int passos){
+	if(igualaRodas()){
+		for(int i = passos; passos > 0; i--){
+			int roda = leRoda(ladoDireito)
+			motorDireita(FRENTE);
+			motorEsquerda(FRENTE);
+			while( roda == leRoda(ladoDireito) )
+				delay(10);
+		}
+	}
+	return true;
+}
+bool movimentaTras(int passos){
+	if(igualaRodas()){
+		for(int i = passos; passos > 0; i--){
+			int roda = leRoda(ladoDireito)
+			motorDireita(TRAS);
+			motorEsquerda(TRAS);
+			while( roda == leRoda(ladoDireito) )
+				delay(10);
+		}
+	}
+	return true;
+}
+
 /*--LittleCousinCar-DEF_END--*/
 
 #end
