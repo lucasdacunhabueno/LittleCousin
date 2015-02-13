@@ -1,5 +1,6 @@
 /*****************************************************************************
 	UTFGames LittleCousinCar Library
+  AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
 	
 	This file is part of LittleCousin.
 	
