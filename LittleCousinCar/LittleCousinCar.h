@@ -126,6 +126,30 @@ bool movimentaTras(int passos){
 	}
 	return true;
 }
+bool rotacionaDireita(int passos){
+	if(igualaRodas()){
+		for(int i = passos; passos > 0; i--){
+			int roda = leRoda(0);
+			motorDireita(-1);
+			motorEsquerda(1);
+			while(roda == leRoda(0))
+				delay(10);
+		}
+	}
+	return true;
+}
+bool rotacionaEsquerda(int passos){
+	if(igualaRodas()){
+		for(int i = passos; passos > 0; i--){
+			int roda = leRoda(0);
+			motorDireita(1);
+			motorEsquerda(-1);
+			while(roda == leRoda(0))
+				delay(10);
+		}
+	}
+	return true;
+}
 
 /*--LittleCousinCar-DEF_END--*/
 
