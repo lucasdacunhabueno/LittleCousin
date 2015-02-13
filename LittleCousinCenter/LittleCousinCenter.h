@@ -1,6 +1,7 @@
 /*****************************************************************************
-  UTFGames LittleCousinCenter Library
-  
+	UTFGames LittleCousinCenter Library
+  AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
+	
 	This file is part of LittleCousin.
 	
   LittleCousin is free software: you can redistribute it and/or modify
@@ -16,7 +17,6 @@
   You should have received a copy of the GNU General Public License
   along with LittleCousin.  If not, see <http://www.gnu.org/licenses/>.
 
-*****************************************************************************/
 
 //---------------------------------------------------------------------------
 #ifndef LittleCousinCenter_H
@@ -74,5 +74,10 @@ int leituraDasEntradas(){
 		}
 	}
 }
+
+
+
+
+
 
 /*--LittleCousinCente
