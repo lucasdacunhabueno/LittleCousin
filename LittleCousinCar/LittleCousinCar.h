@@ -88,26 +88,26 @@ void motorEsquerda(int direcao){
 		}
 }
 int leRoda(int lado){
-	return lado == ladoDireito ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
+	return lado == 0 ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
 }
-bool igualaRodas(){
-	int i = leRoda(ladoDireito);
-	while(leRoda(ladoDireito) == i)
-		motorDireita(FRENTE);
-	motorDireita(PARAR);
-	i = leRoda(ladoEsquerdo);
-	while(leRoda(ladoEsquerdo) == i)
-		motorEsquerda(FRENTE);
-	motorEsquerda(PARAR);
+bool igualaRodas(){ //Posiciona as duas rodas no inicio do passo
+	int i = leRoda(0);
+	while(leRoda(0) == i)
+		motorDireita(1);
+	motorDireita(0);
+	i = leRoda(1);
+	while(leRoda(1) == i)
+		motorEsquerda(1);
+	motorEsquerda(0);
 	return true;
 }
 bool movimentaFrente(int passos){
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(ladoDireito)
-			motorDireita(FRENTE);
-			motorEsquerda(FRENTE);
-			while( roda == leRoda(ladoDireito) )
+			int roda = leRoda(0)
+			motorDireita(1);
+			motorEsquerda(1);
+			while( roda == leRoda(0) )
 				delay(10);
 		}
 	}
@@ -116,10 +116,10 @@ bool movimentaFrente(int passos){
 bool movimentaTras(int passos){
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(ladoDireito)
-			motorDireita(TRAS);
-			motorEsquerda(TRAS);
-			while( roda == leRoda(ladoDireito) )
+			int roda = leRoda(0)
+			motorDireita(-1);
+			motorEsquerda(-1);
+			while( roda == leRoda(0) )
 				delay(10);
 		}
 	}
