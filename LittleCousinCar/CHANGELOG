@@ -2,7 +2,9 @@
   CHANGELOG LittleCousinCar Library
   
   21/02/2015 - Lucas da Cunha Bueno
+    - Correção de Bugs
     - Método de envio e recebimento de dados via RF
+    - Método para parar as duas rodas
   
   15/02/2015 - Lucas da Cunha Bueno
     - Método de pareamento das rodas
