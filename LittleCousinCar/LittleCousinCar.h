@@ -1,8 +1,8 @@
 /*****************************************************************************
-	UTFGames LittleCousinCar Library v0.6 BETA
+  UTFGames LittleCousinCar Library v0.6 BETA
   AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
 	
-	This file is part of LittleCousin.
+  This file is part of LittleCousin.
 	
   LittleCousin is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -60,12 +60,12 @@ String recebeDados();
 
 void prepararPinos(){ //Define os terminais do CI de acordo com suas devidas tarefas (Entrada ou Saida) e freia os motores
   pinMode(pinoSensorDireito,0);
-	pinMode(pinoSensorEsquerdo,0);
-	pinMode(enableM1,1);
-	pinMode(enableM2,1);
+  pinMode(pinoSensorEsquerdo,0);
+  pinMode(enableM1,1);
+  pinMode(enableM2,1);
   pinMode(pinBuzzer,1);
-	digitalWrite(enableM1,0);
-	digitalWrite(enableM2,0);
+  digitalWrite(enableM1,0);
+  digitalWrite(enableM2,0);
   tone(pinBuzzer,1500);
   delay(150);
   noTone(pinBuzzer,1500);
@@ -112,96 +112,98 @@ String recebeDados(){
 
 
 void motorDireita(int direcao){ //Realiza operações com o motor do lado direito ( Motor 2 )
-	if(direcao == 1){           //MOVER PARA FRENTE
-		digitalWrite(enableM2,1); //ATIVA O MOTOR DA DIREITA
-		digitalWrite(pin1A,0);    // ATERRA O PINO 1A
-	}
-	else
-		if(direcao == -1){          //MOVER PARA TRÁS
-			digitalWrite(enableM2,1); //ATIVA O MOTOR
-			digitalWrite(pin1A,1);    // +5V NO PINO 1A
-		}
-		else{
-			digitalWrite(enableM2,0); //DESATIVA O MOTOR
-			digitalWrite(pin1A,0);    // ATERRA O PINO 1A
-		}
+  if(direcao == 1){           //MOVER PARA FRENTE
+    digitalWrite(enableM2,1); //ATIVA O MOTOR DA DIREITA
+    digitalWrite(pin1A,0);    // ATERRA O PINO 1A
+  }
+  else
+    if(direcao == -1){          //MOVER PARA TRÁS
+      digitalWrite(enableM2,1); //ATIVA O MOTOR
+      digitalWrite(pin1A,1);    // +5V NO PINO 1A
+    }
+    else{
+      digitalWrite(enableM2,0); //DESATIVA O MOTOR
+      digitalWrite(pin1A,0);    // ATERRA O PINO 1A
+    }
 }
 void motorEsquerda(int direcao){ //Realiza operações com o motor do lado esquerdo ( Motor 1 )
-	if(direcao == 1){           //MOVER PARA FRENTE
-		digitalWrite(enableM1,1); //ATIVA O MOTOR
-		digitalWrite(pin3A,0);    // ATERRA O PINO 3A
-	}
-	else
-		if(direcao == -1){           //MOVER PARA TRÁS
-			digitalWrite(enableM1,1);  //ATIVA O MOTOR
-			digitalWrite(pin3A,1);     // +5V NO PINO 3A
-		}
-		else{
-			digitalWrite(enableM1,0); //DESATIVA O MOTOR
-			digitalWrite(pin3A,0);    // ATERRA O PINO 3A
-		}
+  if(direcao == 1){           //MOVER PARA FRENTE
+    digitalWrite(enableM1,1); //ATIVA O MOTOR
+    digitalWrite(pin3A,0);    // ATERRA O PINO 3A
+  }
+  else
+    if(direcao == -1){           //MOVER PARA TRÁS
+      digitalWrite(enableM1,1);  //ATIVA O MOTOR
+      digitalWrite(pin3A,1);     // +5V NO PINO 3A
+    }
+    else{
+      digitalWrite(enableM1,0); //DESATIVA O MOTOR
+      digitalWrite(pin3A,0);    // ATERRA O PINO 3A
+    }
 }
 int leRoda(int lado){  //Realiza a leitura do sensor ótico localizado nas rodas para saber sua posição
-	return lado == 0 ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
+  return lado == 0 ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
 }
 bool igualaRodas(){ //Posiciona as duas rodas no inicio do passo
-	int i = leRoda(0);
-	while(leRoda(0) == i)
-		motorDireita(1);
-	motorDireita(0);
-	i = leRoda(1);
-	while(leRoda(1) == i)
-		motorEsquerda(1);
-	motorEsquerda(0);
-	return true;
+  int i = leRoda(0);
+  while(leRoda(0) == i)
+    motorDireita(1);
+  motorDireita(0);
+  i = leRoda(1);
+  while(leRoda(1) == i)
+    motorEsquerda(1);
+  motorEsquerda(0);
+  return true;
 }
 bool movimentaFrente(int passos){ //Movimenta o carro para frente um determinado número de passos
-	if(igualaRodas()){
-		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(0)
-			motorDireita(1);
-			motorEsquerda(1);
-			while( roda == leRoda(0) )
-				delay(10);
-		}
-	}
-	return true;
+  if(igualaRodas()){
+    for(int i = passos; passos > 0; i--){
+      int roda = leRoda(0)
+      motorDireita(1);
+      motorEsquerda(1);
+      while( roda == leRoda(0) )
+        delay(10);
+    }
+  }
+  return true;
 }
 bool movimentaTras(int passos){ //Movimenta o carro para trás um determinado número de passos
-	if(igualaRodas()){
-		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(0)
-			motorDireita(-1);
-			motorEsquerda(-1);
-			while( roda == leRoda(0) )
-				delay(10);
-		}
-	}
-	return true;
+  if(igualaRodas()){
+    for(int i = passos; passos > 0; i--){
+      int roda = leRoda(0);
+      motorDireita(-1);
+      motorEsquerda(-1);
+      while( roda == leRoda(0) )
+        delay(50);
+    }
+  }
+  return true;
 }
 bool rotacionaDireita(int passos){ //Rotaciona o carro para direita um determinado número de passos
-	if(igualaRodas()){
-		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(0);
-			motorDireita(-1);
-			motorEsquerda(1);
-			while(roda == leRoda(0))
-				delay(10);
-		}
-	}
-	return true;
+  if(igualaRodas()){
+    for(int i = passos; passos > 0; i--){
+      int roda = leRoda(0);
+      motorDireita(-1);
+      motorEsquerda(1);
+      while(roda == leRoda(0))
+        delay(10);
+    }
+  }
+  return true;
 }
 bool rotacionaEsquerda(int passos){ //Rotaciona o carro para esquerda um determinado número de passos
-	if(igualaRodas()){
-		for(int i = passos; passos > 0; i--){
-			int roda = leRoda(0);
-			motorDireita(1);
-			motorEsquerda(-1);
-			while(roda == leRoda(0))
-				delay(10);
-		}
-	}
-	return true;
+  if(igualaRodas()){
+    for(int i = passos; passos > 0; i--){
+      int roda = leRoda(0);
+      motorDireita(1);
+      motorEsquerda(-1);
+      while(roda == leRoda(0))
+        delay(10);
+    }
+  }
+  return true;
 }
+
 /*--LittleCousinCar-DEF_END--*/
+
 #end
