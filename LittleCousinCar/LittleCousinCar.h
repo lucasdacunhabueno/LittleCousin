@@ -203,7 +203,5 @@ bool rotacionaEsquerda(int passos){ //Rotaciona o carro para esquerda um determi
 	}
 	return true;
 }
-
 /*--LittleCousinCar-DEF_END--*/
-
 #end
