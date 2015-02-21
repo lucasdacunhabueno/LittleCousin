@@ -1,0 +1,20 @@
+//*****************************************************************************//
+  CHANGELOG LittleCousinCar Library
+  
+  21/02/2015 - Lucas da Cunha Bueno
+    - Método de envio e recebimento de dados via RF
+  
+  15/02/2015 - Lucas da Cunha Bueno
+    - Método de pareamento das rodas
+  
+  28/01/2015 - Lucas da Cunha Bueno
+    - Método de preparação das portas
+    - Método de leitura dos sensores das rodas
+    - Métodos de movimentação das rodas
+  
+  20/01/2015 - Lucas da Cunha Bueno
+    - Criação da biblioteca
+    - Primeiro Hello World para o  LittleCousinCar
+    - Importação das bibliotecas e criação das variaveis de pinos básicos
+
+//*****************************************************************************//
