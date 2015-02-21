@@ -1,5 +1,5 @@
 /*****************************************************************************
-	UTFGames LittleCousinCar Library
+	UTFGames LittleCousinCar Library v0.6 BETA
   AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
 	
 	This file is part of LittleCousin.
@@ -30,41 +30,94 @@
 //---------------------------------------------------------------------------
 
 #include <Arduino.h>
+#include <SPI.h>
+#include "nRF24L01.h"
+#include "RF24.h"
 
 /*--LittleCousinCar-DEF_BEGIN--*/
-//Pino sensor otico direito
-uint_8 pinoSensorDireito = 12;
-//Pino sensor otico esquerdo
-uint_8 pinoSensorEsquerdo = 13;
-uint_8 enableM1 = 5;
-uint_8 enableM2 = 6;
-uint_8 pin1A = 7;
-uint_8 pin3A = 8;
-int passoPadrao = 10;
+int passoPadrao = 10;            //Numero padrão de passos da roda
+uint_8 pinoSensorDireito = 12;   //Pino sensor otico direito
+uint_8 pinoSensorEsquerdo = 13;  //Pino sensor otico esquerdo
+uint_8 enableM1 = 5;             //Pino ENABLE do motor 1
+uint_8 enableM2 = 6;             //Pino ENABLE do motor 2
+uint_8 pin1A = 7;                //Pino 1A do motor 1
+uint_8 pin3A = 8;                //Pino 3A do motor 2
+uint_8 pinBuzzer = 4;            //Pino Buzzer
+uint_8 pinCE = 9;
+uint_8 pinCNS = 10;
+RF24 radio(9,10);
+const uint64_t pipe = 0xE8E8F0F0E1LL;
 
 void prepararPinos();
 int leRoda(int lado);
 void motorDireita(int direcao);
 void motorEsquerda(int direcao);
 bool movimentaFrente(int passos);
-bool igualaRodas();
 bool movimentaTras(int passos);
+bool igualaRodas();
+bool enviaDados();
+String recebeDados();
 
-void prepararPinos(){
+void prepararPinos(){ //Define os terminais do CI de acordo com suas devidas tarefas (Entrada ou Saida) e freia os motores
   pinMode(pinoSensorDireito,0);
 	pinMode(pinoSensorEsquerdo,0);
 	pinMode(enableM1,1);
 	pinMode(enableM2,1);
+  pinMode(pinBuzzer,1);
 	digitalWrite(enableM1,0);
 	digitalWrite(enableM2,0);
+  tone(pinBuzzer,1500);
+  delay(150);
+  noTone(pinBuzzer,1500);
+  iniciaCom();  
 }
-void motorDireita(int direcao){
-	if(direcao == 1){ //MOVER PARA FRENTE
+
+bool enviaDados(String texto){
+  int msg[1];
+  radio.begin();
+  radio.openWritingPipe(pipe);
+  int messageSize = texto.length();
+  for (int i = 0; i < messageSize; i++) {
+    int charToSend[1];
+    charToSend[0] = texto.charAt(i);
+    radio.write(charToSend,1);
+  }  
+  msg[0] = 2; 
+  radio.write(msg,1);
+  radio.powerDown(); 
+  delay(1000);
+  radio.powerUp();
+  return true;
+}
+
+String recebeDados(){
+  int msg[1];
+  int lastmsg = 1;
+  String texto = "";
+  radio.begin();
+  radio.openReadingPipe(1,pipe);
+  radio.startListening();
+  if (radio.available()){
+    bool done = false;  
+    done = radio.read(msg, 1); 
+    char theChar = msg[0];
+    while(msg[0] != 2)
+      theMessage.concat(theChar);
+  }
+  radio.powerDown(); 
+  delay(1000);
+  radio.powerUp();
+  return texto;
+}
+
+
+void motorDireita(int direcao){ //Realiza operações com o motor do lado direito ( Motor 2 )
+	if(direcao == 1){           //MOVER PARA FRENTE
 		digitalWrite(enableM2,1); //ATIVA O MOTOR DA DIREITA
 		digitalWrite(pin1A,0);    // ATERRA O PINO 1A
 	}
 	else
-		if(direcao == -1){ //MOVER PARA TRÁS
+		if(direcao == -1){          //MOVER PARA TRÁS
 			digitalWrite(enableM2,1); //ATIVA O MOTOR
 			digitalWrite(pin1A,1);    // +5V NO PINO 1A
 		}
@@ -73,22 +126,22 @@ void motorDireita(int direcao){
 			digitalWrite(pin1A,0);    // ATERRA O PINO 1A
 		}
 }
-void motorEsquerda(int direcao){
-	if(direcao == 1){ //MOVER PARA FRENTE
+void motorEsquerda(int direcao){ //Realiza operações com o motor do lado esquerdo ( Motor 1 )
+	if(direcao == 1){           //MOVER PARA FRENTE
 		digitalWrite(enableM1,1); //ATIVA O MOTOR
 		digitalWrite(pin3A,0);    // ATERRA O PINO 3A
 	}
 	else
-		if(direcao == -1){ //MOVER PARA TRÁS
-			digitalWrite(enableM1,1); //ATIVA O MOTOR
-			digitalWrite(pin3A,1);    // +5V NO PINO 3A
+		if(direcao == -1){           //MOVER PARA TRÁS
+			digitalWrite(enableM1,1);  //ATIVA O MOTOR
+			digitalWrite(pin3A,1);     // +5V NO PINO 3A
 		}
 		else{
 			digitalWrite(enableM1,0); //DESATIVA O MOTOR
 			digitalWrite(pin3A,0);    // ATERRA O PINO 3A
 		}
 }
-int leRoda(int lado){
+int leRoda(int lado){  //Realiza a leitura do sensor ótico localizado nas rodas para saber sua posição
 	return lado == 0 ? digitalRead(pinoSensorDireito) : digitalRead(pinoSensorEsquerdo);
 }
 bool igualaRodas(){ //Posiciona as duas rodas no inicio do passo
@@ -102,7 +155,7 @@ bool igualaRodas(){ //Posiciona as duas rodas no inicio do passo
 	motorEsquerda(0);
 	return true;
 }
-bool movimentaFrente(int passos){
+bool movimentaFrente(int passos){ //Movimenta o carro para frente um determinado número de passos
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
 			int roda = leRoda(0)
@@ -114,7 +167,7 @@ bool movimentaFrente(int passos){
 	}
 	return true;
 }
-bool movimentaTras(int passos){
+bool movimentaTras(int passos){ //Movimenta o carro para trás um determinado número de passos
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
 			int roda = leRoda(0)
@@ -126,7 +179,7 @@ bool movimentaTras(int passos){
 	}
 	return true;
 }
-bool rotacionaDireita(int passos){
+bool rotacionaDireita(int passos){ //Rotaciona o carro para direita um determinado número de passos
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
 			int roda = leRoda(0);
@@ -138,7 +191,7 @@ bool rotacionaDireita(int passos){
 	}
 	return true;
 }
-bool rotacionaEsquerda(int passos){
+bool rotacionaEsquerda(int passos){ //Rotaciona o carro para esquerda um determinado número de passos
 	if(igualaRodas()){
 		for(int i = passos; passos > 0; i--){
 			int roda = leRoda(0);
