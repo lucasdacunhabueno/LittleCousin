@@ -1,5 +1,5 @@
 /*****************************************************************************
-  UTFGames LittleCousinCar Library v0.7 ALPHA
+  UTFGames LittleCousinCar Library v0.8 BETA
   AUTHOR: LUCAS DA CUNHA BUENO (Don't change this!) 
 	
   This file is part of LittleCousin.
@@ -25,6 +25,8 @@
 #define FRENTE 1  //Movimento da roda
 #define TRAS -1 //Movimento da roda
 #define PARAR 0 //Movimento da roda
+#define ESQUERDA 2 //Movimento da roda
+#define DIREITA -2 //Movimento da roda
 #define ladoEsquerdo 0  //Lado da roda
 #define ladoDireito 1 //Lado da roda
 //---------------------------------------------------------------------------
@@ -60,19 +62,27 @@ bool igualaRodas(); //Posiciona as duas rodas no inicio do passo
 bool pararRodas();  //Para as duas rodas
 bool enviaDados(String texto);  //Envia string via RF
 String recebeDados(); //Recebe string via RF
+bool executar(String comandos); //Executa os comandos recebidos 
 
 void prepararPinos(){ 
-  pinMode(pinoSensorDireito,0);
+  //Inicializa o lado esquerdo
   pinMode(pinoSensorEsquerdo,0);
   pinMode(enableM1,1);
-  pinMode(enableM2,1);
-  pinMode(pinBuzzer,1);
   digitalWrite(enableM1,0);
+  
+  //Inicialia o lado direito
+  pinMode(pinoSensorDireito,0);
+  pinMode(enableM2,1);
   digitalWrite(enableM2,0);
+  
+  pinMode(pinBuzzer,1);
   tone(pinBuzzer,1500);
   delay(150);
   noTone(pinBuzzer,1500);
-  iniciaCom();  
+  
+  //Alinha as rodas
+  igualaRodas();
+  delay(2000);
 }
 bool enviaDados(String texto){
   int msg[1];
@@ -143,7 +153,7 @@ bool igualaRodas(){
   int i = leRoda(0);  //Le roda direita  
   while(leRoda(0) == i)
     motorDireita(1);
-  delay(10);
+  //delay(10);
   motorDireita(0);
   i = leRoda(1);
   while(leRoda(1) == i)
@@ -175,7 +185,7 @@ bool movimentaTras(int passos){
         delay(10);
     }
   }
-  mpararRodas();
+  pararRodas();
   return true;
 }
 bool rotacionaDireita(int passos){ 
@@ -207,6 +217,29 @@ bool rotacionaEsquerda(int passos){
 void pararRodas(){
   motorDireita(0);
   motorEsquerda(0);
+}
+
+bool executar(String comandos){
+	int contador = 0;
+	while(contador < comandos.lenght()){
+		switch(comandos.charAt(contador)){
+			case FRENTE:
+				movimentaFrente(passoPadrao);
+				break;
+			case TRAS:
+				movimentaTras(passoPadrao);
+				break;
+			case ESQUERDA:
+				rotacionaEsquerda(passoPadrao);
+				break;
+			case DIREITA:
+				rotacionaDireita(passoPadrao);
+				break;
+			default:
+				pararRodas();
+				break;				
+		}
+	}
 }
 
 /*--LittleCousinCar-DEF_END--*/
