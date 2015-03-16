@@ -1,18 +1,22 @@
 //*****************************************************************************//
   CHANGELOG LittleCousinCar Library
   
+  15/03/2015 - Lucas da Cunha Bueno
+    - Correção de Bugs
+    - Recebimento e execução dos dados recebidos da central
+    
   21/02/2015 - Lucas da Cunha Bueno
     - Correção de Bugs
-    - Método de envio e recebimento de dados via RF
-    - Método para parar as duas rodas
+    - Envio e recebimento de dados via RF
+    - Implementada função para parar as duas rodas
   
   15/02/2015 - Lucas da Cunha Bueno
-    - Método de pareamento das rodas
+    - Pareamento das rodas
   
   28/01/2015 - Lucas da Cunha Bueno
     - Método de preparação das portas
-    - Método de leitura dos sensores das rodas
-    - Métodos de movimentação das rodas
+    - Leitura dos sensores das rodas
+    - Movimentação das rodas
   
   20/01/2015 - Lucas da Cunha Bueno
     - Criação da biblioteca
